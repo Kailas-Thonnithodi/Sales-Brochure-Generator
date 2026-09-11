@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from urllib.parse import urldefrag, urljoin, urlparse
 import requests
 
 
@@ -31,5 +32,14 @@ def fetch_website_links(url):
     """
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, "html.parser")
-    links = [link.get("href") for link in soup.find_all("a")]
-    return [link for link in links if link]
+    hrefs = [link.get("href") for link in soup.find_all("a")]
+    # resolve relative hrefs against the page, drop the #fragment, keep only http(s),
+    # and de-duplicate while preserving order
+    seen = {}
+    for href in hrefs:
+        if not href:
+            continue
+        link = urldefrag(urljoin(url, href)).url
+        if urlparse(link).scheme in ("http", "https"):
+            seen[link] = None
+    return list(seen)

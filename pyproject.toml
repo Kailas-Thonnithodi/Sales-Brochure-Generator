@@ -8,6 +8,7 @@ dependencies = [
     "bs4>=0.0.2",
     "dotenv>=0.9.9",
     "ipython>=9.17.1",
+    "markdown>=3.10.3",
     "openai>=3.8.0",
     "pip>=26.2.1",
     "requests>=2.34.2",
