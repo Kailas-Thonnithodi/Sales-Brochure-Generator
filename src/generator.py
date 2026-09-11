@@ -46,7 +46,7 @@ def fetch_page_and_all_relevant_links(url, model_class: Gemini | Open):
         result += fetch_website_contents(link["url"])
     return result
 
-def create_brochure(company_name, url, page_contents, model_class: Gemini | Open, streamed=True):
+def create_brochure(company_name, url, page_contents, model_class: Gemini | Open, streamed=False):
     '''
     Creates the markdown file which produces brochure for the company. As the LLM (after link extraction and information extrapolation),
     to generate a markdown formatted brochure based on the provided content. 
